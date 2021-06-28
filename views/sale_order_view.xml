@@ -30,6 +30,7 @@
                 </xpath>
                 <xpath expr="//button[@name='action_confirm']" position="after">
                     <button name="approve_order" string="Approve quotation" type="object" attrs="{'invisible': ['|',('requires_approval', '=', False),('current_user_approver','=',False)]}"/>
+                   
                 </xpath>
             </field>
         </record>

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
-
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 
 class SaleOrderExt(models.Model):
     _inherit="sale.order"
@@ -11,6 +11,10 @@ class SaleOrderExt(models.Model):
     requires_approval = fields.Boolean(compute="_compute_requires_approval")
     current_user_approver = fields.Boolean(compute="_compute_current_user_approver")
     
+    
+    
+   
+
 
     def _compute_current_user_approver(self):
         for rcd in self:
@@ -87,3 +91,24 @@ class SaleApprovals(models.Model):
     min = fields.Float(string="Minimum amount to approve")
     max = fields.Float(string="Maximum amount to approve")
 
+
+class ResPartnerExt(models.Model):
+    _inherit="res.partner"
+
+    def redirect_to_approved_orders(self,context={}):
+        form_view_id = self.env.ref("sale.view_order_form").id
+        tree_view_id = self.env.ref("sale.view_quotation_tree_with_onboarding").id
+        
+   
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Sales Orders',
+            'view_type': 'form',
+            'view_mode': 'tree',
+            'res_model': 'sale.order',
+            'views': [(tree_view_id,'tree'),(form_view_id, 'form')],
+            'domain': [('sale_order_approver_lines.name', '=', self.id)],
+            'target': 'current',
+            'context':context,            
+        }
+       
