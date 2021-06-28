@@ -12,23 +12,37 @@
                             <field name="requires_approval" invisible="1"/>  
                             <field name="current_user_approver" invisible="1"/>
                              
-                            <field name="sale_order_approver_lines">
-                                <tree editable="top">
+                            <field name="sale_order_approver_lines" >
+                                <tree editable="top" decoration-warning="app_status != True" decoration-success="app_status != False" >
                                     <field name="name" width="50" />
-                                    <field name="app_status" width="50"/>
+                                    <field name="app_status" invisible="1"/>
+                                    
                                 </tree>
                             </field>  
                         </page>                        
                 </xpath>
 
                 <xpath expr="//button[@name='action_confirm']" position="attributes">
-                    <attribute name="attrs">{'invisible': ['|',('requires_approval', '!=', False),('state', 'not in', ['draft'])]}</attribute>
+                    <attribute name="attrs">{'invisible': ['|','|',('requires_approval', '!=', False),('state', 'not in', ['draft']),('id','=',False)]}</attribute>
                 </xpath>
                 <xpath expr="//button[8]" position="attributes">
                     <attribute name="attrs">{'invisible': ['|',('requires_approval', '!=', False),('state', 'not in', ['sent'])]}</attribute>
                 </xpath>
                 <xpath expr="//button[@name='action_confirm']" position="after">
                     <button name="approve_order" string="Approve quotation" type="object" attrs="{'invisible': ['|',('requires_approval', '=', False),('current_user_approver','=',False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="sale_order_sales_approvals_inh_tree" model="ir.ui.view">
+            <field name="name">sale_order_sales_approvals_inh.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="before">
+                    <field name="approvals_is_active" invisible="1"/>
+                    <field name="requires_approval" attrs="{'invisible': [('approvals_is_active', '=', False)]}"/>
                 </xpath>
             </field>
         </record>
