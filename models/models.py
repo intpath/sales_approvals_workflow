@@ -9,20 +9,33 @@ class SaleOrderExt(models.Model):
     approvals_is_active = fields.Boolean(compute="_compute_approvals_is_active")
     sale_order_approver_lines = fields.One2many("sale.order.approvers","order_id",readonly=True)
     requires_approval = fields.Boolean(compute="_compute_requires_approval")
+    current_user_approver = fields.Boolean(compute="_compute_current_user_approver")
     
 
-    
+    def _compute_current_user_approver(self):
+        for rcd in self:
+            partner_object = rcd.sale_order_approver_lines.filtered(lambda x: x.name == self.env.user.partner_id and x.app_status == False )
+            if partner_object :
+                rcd.current_user_approver = True
+            else:
+                rcd.current_user_approver = False
+
     
     def _compute_requires_approval(self):
         for rcd in self:
             if rcd.sale_order_approver_lines and rcd.approvals_is_active:
                 if rcd.sale_order_approver_lines.filtered(lambda x: x.app_status == False):
                     rcd.requires_approval = True
+                else:
+                    rcd.requires_approval = False
+
             else:
                 rcd.requires_approval = False
 
     def approve_order(self):
-        pass
+        partner_approver_line_object = self.sale_order_approver_lines.filtered(lambda x: x.name == self.env.user.partner_id )
+        partner_approver_line_object.app_status = True
+        self.message_post(message_type='notification',body=f'{self.env.user.partner_id.name} has approved this Quotation')
 
 
 
@@ -30,7 +43,7 @@ class SaleOrderExt(models.Model):
 
     @api.constrains("team_id","order_line")
     def fill_sale_order_approver_lines(self):
-        if approvals_is_active:
+        if self.approvals_is_active:
             self.write({"sale_order_approver_lines":[(5, 0, 0)]})
             approvers = self.team_id.approver_lines.filtered(lambda x: x.min <= self.amount_total <= x.max )
             if approvers:

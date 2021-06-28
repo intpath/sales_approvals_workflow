@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "sales_approvals_workflow",
+    'name': "Sales Approval Process",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as

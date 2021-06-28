@@ -10,6 +10,7 @@
                     <page string="Approvers" name="approvers" attrs="{'invisible': [('approvals_is_active', '=', False)]}">
                             <field name="approvals_is_active" invisible="1"/>
                             <field name="requires_approval" invisible="1"/>  
+                            <field name="current_user_approver" invisible="1"/>
                              
                             <field name="sale_order_approver_lines">
                                 <tree editable="top">
@@ -21,13 +22,13 @@
                 </xpath>
 
                 <xpath expr="//button[@name='action_confirm']" position="attributes">
-                    <attribute name="attrs">{'invisible': [('requires_approval', '!=', False)]}</attribute>
+                    <attribute name="attrs">{'invisible': ['|',('requires_approval', '!=', False),('state', 'not in', ['draft'])]}</attribute>
                 </xpath>
                 <xpath expr="//button[8]" position="attributes">
-                    <attribute name="attrs">{'invisible': [('requires_approval', '!=', False)]}</attribute>
+                    <attribute name="attrs">{'invisible': ['|',('requires_approval', '!=', False),('state', 'not in', ['sent'])]}</attribute>
                 </xpath>
-                <xpath expr="//button[@name='action_confirm'" position="after">
-                    <button name="approve_order" string="Approve quotation" type="object" attrs="{'invisible': [('requires_approval', '=', False)]}"/>
+                <xpath expr="//button[@name='action_confirm']" position="after">
+                    <button name="approve_order" string="Approve quotation" type="object" attrs="{'invisible': ['|',('requires_approval', '=', False),('current_user_approver','=',False)]}"/>
                 </xpath>
             </field>
         </record>
