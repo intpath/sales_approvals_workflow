@@ -29,6 +29,7 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'security/groups.xml',
         'views/crm_team_view.xml',
         'views/res_config_view.xml',
         'views/sale_order_view.xml',

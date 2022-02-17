@@ -1,0 +1,8 @@
+<odoo>
+    <data>
+        <record id="approval_manager" model="res.groups">
+            <field name="name">Sale Order Approval Manager</field>
+            <field name="category_id" ref="base.module_category_sales_sales"/>
+        </record>
+    </data>
+</odoo>

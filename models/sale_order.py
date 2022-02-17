@@ -48,6 +48,16 @@ class SaleOrderExt(models.Model):
             body=f'{self.env.user.partner_id.name} has approved this Quotation'
             )
 
+    def manager_approve_order(self):
+        for record in self:
+            for approver_line in record.sale_order_approver_lines:
+                approvers_string = ', '
+                approver_line.app_status = True
+                self.message_post(
+                    message_type='notification',
+                    body=f'Mansger {self.env.user.partner_id.name} has approved this Quotation on behalf of: {approvers_string.join(record.sale_order_approver_lines.mapped("name.name"))}'
+                    )
+
     @api.constrains("team_id", "order_line")
     def fill_sale_order_approver_lines(self):
         if self.approvals_is_active:

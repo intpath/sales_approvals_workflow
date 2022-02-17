@@ -28,7 +28,8 @@
                     <attribute name="attrs">{'invisible': ['|',('requires_approval', '!=', False),('state', 'not in', ['sent'])]}</attribute>
                 </xpath>
                 <xpath expr="//button[@name='action_confirm']" position="after">
-                    <button name="approve_order" string="Approve quotation" type="object" attrs="{'invisible': ['|',('requires_approval', '=', False),('current_user_approver','=',False)]}"/>
+                    <button name="approve_order" string="Approve quotation" type="object" attrs="{'invisible': ['|', ('requires_approval', '=', False), ('current_user_approver','=',False)]}"/>
+                    <button name="manager_approve_order" string="Approve quotation (Manager)" type="object" attrs="{'invisible': [('requires_approval', '=', False)]}"  groups="sales_approvals_workflow.approval_manager"/>
                 </xpath>
             </field>
         </record>
