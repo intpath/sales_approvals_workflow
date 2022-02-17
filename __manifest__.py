@@ -25,18 +25,13 @@
     'price':70,
     'currency':'USD',
     'license':'LGPL-3',
+    
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/views.xml',
-        'views/templates.xml',
         'views/crm_team_view.xml',
-        'views/rers_config_view.xml',
+        'views/res_config_view.xml',
         'views/sale_order_view.xml',
         'views/res_partner_view.xml'
-    ],
-    # only loaded in demonstration mode
-    'demo': [
-        'demo/demo.xml',
     ],
 }

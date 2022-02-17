@@ -8,7 +8,6 @@
                     <xpath expr="//page[@name='members']" position="after">
                         <page string="Approvers" namne="approvers" attrs="{'invisible': [('approvals_is_active', '=', False)]}">
                             <field name="approvals_is_active" invisible="1"/>
-                                                      
                             <field name="approver_lines">
                                 <tree editable="top">
                                     <field name="name" width="50" />
