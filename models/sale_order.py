@@ -45,7 +45,9 @@ class SaleOrderExt(models.Model):
         partner_approver_line_object.app_status = True
         self.message_post(
             message_type='notification',
-            body=f'{self.env.user.partner_id.name} has approved this Quotation'
+            subtype_id = self.env.ref('mail.mt_comment').id,
+            body=f'{self.env.user.partner_id.name} has approved this Quotation',
+            partner_ids = [self.create_uid.partner_id.id],
             )
 
     def manager_approve_order(self):
@@ -55,7 +57,8 @@ class SaleOrderExt(models.Model):
                 approver_line.app_status = True
                 self.message_post(
                     message_type='notification',
-                    body=f'Mansger {self.env.user.partner_id.name} has approved this Quotation on behalf of: {approvers_string.join(record.sale_order_approver_lines.mapped("name.name"))}'
+                    subtype_id = self.env.ref('mail.mt_comment').id,
+                    body=f'Mansger {self.env.user.partner_id.name} has approved this Quotation on behalf of: {approvers_string.join(record.sale_order_approver_lines.mapped("name.name"))}',
                     )
 
     @api.constrains("team_id", "order_line")
@@ -101,6 +104,7 @@ class SaleOrderExt(models.Model):
                         self.message_post(
                             body=body,
                             subject="Sale Order Approval",
+                            subtype_id = self.env.ref('mail.mt_comment').id,
                             message_type='notification',
                             notification_ids=notification_ids
                             )
