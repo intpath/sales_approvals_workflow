@@ -13,6 +13,14 @@ class SaleOrderApproversLines(models.Model):
     is_notified = fields.Boolean("Is Notified?", readonly=True)
 
 
+class SaleOrderCategoryApproversLines(models.Model):
+    _name = "sale.order.category.approvers"
+
+    order_id = fields.Many2one("sale.order")
+    name = fields.Many2one("res.partner", string="Approver", required="True")
+    app_status = fields.Boolean(string="Approval Status", default=False)
+    is_notified = fields.Boolean("Is Notified?", readonly=True)
+
 class SaleApprovals(models.Model):
     _name = "sale.approvers"
 
@@ -20,3 +28,11 @@ class SaleApprovals(models.Model):
     name = fields.Many2one("res.partner", string="Approver", required="True")
     min = fields.Float(string="Minimum amount to approve")
     max = fields.Float(string="Maximum amount to approve")
+
+
+class SaleCategoryApprovals(models.Model):
+    _name = "sale.category.approvers"
+
+    team_id = fields.Many2one("crm.team")
+    name = fields.Many2one("res.partner", string="Approver", required="True")
+    category_ids = fields.Many2many('product.category')

@@ -8,6 +8,7 @@
             <field name="inherit_id" ref="sale.res_config_settings_view_form" />
             <field name="arch" type="xml">
                 <xpath expr="//div[@data-key='sale_management']//div[@name='quotation_order_setting_container']" position="inside">
+                    
                     <div class="col-12 col-lg-6 o_setting_box" id="product_matrix">
                         <div class="o_setting_left_pane">
                             <field name="use_approvals_so"/>
@@ -30,6 +31,30 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-12 col-lg-6 o_setting_box" id="product_matrix">
+                        <div class="o_setting_left_pane">
+                            <field name="use_category_approvals_so"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="use_category_approvals_so" string="Activate / Deactivate Sales Category Approvals"/>
+                            <div class="text-muted">
+                                Activate / Deactivate Sales Category Approvals
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box" id="product_matrix">
+                        <div class="o_setting_left_pane">
+                            <field name="send_notification_to_category_approvers"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="send_notification_to_category_approvers" string="Activate / Deactivate Sales Category Approvals Notification"/>
+                            <div class="text-muted">
+                                Activate / Deactivate Sales Category Approvals Notification
+                            </div>
+                        </div>
+                    </div>
+
                 </xpath>
             </field>
         </record>
