@@ -19,7 +19,7 @@
                         </field>  
                     </page>        
 
-                    <page string="Caregory Approvers" name="category_approvers" attrs="{'invisible': [('category_approvals_is_active', '=', False)]}">
+                    <page string="Category Approvers" name="category_approvers" attrs="{'invisible': [('category_approvals_is_active', '=', False)]}">
                         <field name="category_approvals_is_active" invisible="1"/>
                         <field name="requires_category_approval" invisible="1"/>  
                         <field name="current_user_category_approver" invisible="1"/>
