@@ -6,6 +6,7 @@
                 <field name="inherit_id" ref="sales_team.crm_team_view_form" />
                 <field name="arch" type="xml">
                     <xpath expr="//page[@name='members']" position="after">
+
                         <page string="Approvers" namne="approvers" attrs="{'invisible': [('approvals_is_active', '=', False)]}">
                             <field name="approvals_is_active" invisible="1"/>
                             <field name="approver_lines">
@@ -15,7 +16,18 @@
                                     <field name="max" width="50"/>
                                 </tree>
                             </field>  
-                        </page>                        
+                        </page>
+
+                        <page string="Category Approvers" namne="category_approvers" attrs="{'invisible': [('category_approvals_is_active', '=', False)]}">
+                            <field name="category_approvals_is_active" invisible="1"/>
+                            <field name="category_approvers_lines">
+                                <tree editable="top">
+                                    <field name="name" width="50" />
+                                    <field name="category_ids" widget="many2many_tags" width="50"/>
+                                </tree>
+                            </field>  
+                        </page>         
+
                     </xpath>
                 </field>
             </record>

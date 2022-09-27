@@ -9,10 +9,20 @@ class CrmTeam(models.Model):
 
     approvals_is_active = fields.Boolean(
         compute="_compute_approvals_is_active")
+
+    category_approvals_is_active = fields.Boolean(
+        compute="_compute_approvals_is_active")
+
     approver_lines = fields.One2many(
         "sale.approvers", "team_id", string="Approvers Lines")
+
+    category_approvers_lines = fields.One2many(
+        "sale.category.approvers", "team_id", string="Category Approvers Lines")
 
     def _compute_approvals_is_active(self):
         for rcd in self:
             rcd.approvals_is_active = self.env['ir.config_parameter'].sudo(
             ).get_param('sales_approvals_workflow.use_approvals_so')
+
+            rcd.category_approvals_is_active = self.env['ir.config_parameter'].sudo(
+            ).get_param('sales_approvals_workflow.use_category_approvals_so')

@@ -13,6 +13,12 @@
                         </div>
                     </button>
                     
+                    <button name="redirect_to_category_approved_orders" type="object" class="oe_stat_button"
+                        icon="fa-thumbs-up" groups="" >
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_text">Category Approvals</span>
+                        </div>
+                    </button>
                 </xpath>
             </field>
         </record>

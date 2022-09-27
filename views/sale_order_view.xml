@@ -8,28 +8,42 @@
             <field name="arch" type="xml">
                 <xpath expr="//page[@name='customer_signature']" position="after">
                     <page string="Approvers" name="approvers" attrs="{'invisible': [('approvals_is_active', '=', False)]}">
-                            <field name="approvals_is_active" invisible="1"/>
-                            <field name="requires_approval" invisible="1"/>  
-                            <field name="current_user_approver" invisible="1"/>
-                            <field name="sale_order_approver_lines" >
-                                <tree editable="top" decoration-warning="app_status != True" decoration-success="app_status != False" >
-                                    <field name="name" width="50" />
-                                    <field name="app_status" invisible="1"/>
-                                    
-                                </tree>
-                            </field>  
-                        </page>                        
+                        <field name="approvals_is_active" invisible="1"/>
+                        <field name="requires_approval" invisible="1"/>  
+                        <field name="current_user_approver" invisible="1"/>
+                        <field name="sale_order_approver_lines" >
+                            <tree editable="top" decoration-warning="app_status != True" decoration-success="app_status != False" >
+                                <field name="name" width="50" />
+                                <field name="app_status" invisible="1"/>
+                            </tree>
+                        </field>  
+                    </page>        
+
+                    <page string="Caregory Approvers" name="category_approvers" attrs="{'invisible': [('category_approvals_is_active', '=', False)]}">
+                        <field name="category_approvals_is_active" invisible="1"/>
+                        <field name="requires_category_approval" invisible="1"/>  
+                        <field name="current_user_category_approver" invisible="1"/>
+                        <field name="sale_order_category_approver_lines" >
+                            <tree editable="top" decoration-warning="app_status != True" decoration-success="app_status != False" >
+                                <field name="name" width="50" />
+                                <field name="app_status" invisible="1"/>
+                            </tree>
+                        </field>  
+                    </page>
+
                 </xpath>
 
                 <xpath expr="//button[@name='action_confirm']" position="attributes">
-                    <attribute name="attrs">{'invisible': ['|','|',('requires_approval', '!=', False),('state', 'not in', ['draft']),('id','=',False)]}</attribute>
+                    <attribute name="attrs">{'invisible': ['|','|','|',('requires_approval', '!=', False),('requires_category_approval', '!=', False),('state', 'not in', ['draft']),('id','=',False)]}</attribute>
                 </xpath>
                 <xpath expr="//button[8]" position="attributes">
-                    <attribute name="attrs">{'invisible': ['|',('requires_approval', '!=', False),('state', 'not in', ['sent'])]}</attribute>
+                    <attribute name="attrs">{'invisible': ['|','|',('requires_approval', '!=', False),('requires_category_approval', '!=', False),('state', 'not in', ['sent'])]}</attribute>
                 </xpath>
                 <xpath expr="//button[@name='action_confirm']" position="after">
                     <button name="approve_order" string="Approve quotation" type="object" attrs="{'invisible': ['|', ('requires_approval', '=', False), ('current_user_approver','=',False)]}"/>
                     <button name="manager_approve_order" string="Approve quotation (Manager)" type="object" attrs="{'invisible': [('requires_approval', '=', False)]}"  groups="sales_approvals_workflow.approval_manager"/>
+                    <button name="category_approve_order" string="Approve quotation categories" type="object" attrs="{'invisible': ['|', ('requires_category_approval', '=', False), ('current_user_category_approver','=',False)]}"/>
+                    <button name="manager_category_approve_order" string="Approve quotation categories (Manager)" type="object" attrs="{'invisible': [('requires_category_approval', '=', False)]}"  groups="sales_approvals_workflow.approval_manager"/>
                 </xpath>
             </field>
         </record>
@@ -42,7 +56,9 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='state']" position="before">
                     <field name="approvals_is_active" invisible="1"/>
+                    <field name="category_approvals_is_active" invisible="1"/>
                     <field name="requires_approval" attrs="{'invisible': [('approvals_is_active', '=', False)]}"/>
+                    <field name="requires_category_approval" attrs="{'invisible': [('category_approvals_is_active', '=', False)]}"/>
                 </xpath>
             </field>
         </record>

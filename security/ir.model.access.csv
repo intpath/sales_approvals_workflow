@@ -1,3 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_sale_approvers,sale.approvers,model_sale_approvers,base.group_user,1,1,1,1
+access_sale_category_approvers,sale.category.approvers,model_sale_category_approvers,base.group_user,1,1,1,1
 access_sale_order_approvers,sale.order.approvers,model_sale_order_approvers,base.group_user,1,1,1,1
+access_sale_order_category_approvers,sale.order.category.approvers,model_sale_order_category_approvers,base.group_user,1,1,1,1
